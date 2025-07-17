@@ -1,19 +1,21 @@
-function mincost(arr) { 
-  // Sort numerically (very important!)
-  arr.sort((a, b) => a - b); 
+function mincost(arr) {
+  const minHeap = [...arr];
+  minHeap.sort((a, b) => a - b); // emulate min-heap
 
-  // Start with first two elements
-  let result = arr[0] + arr[1];
-  let temp = result;
+  let totalCost = 0;
 
-  // Combine each next element
-  for (let i = 2; i < arr.length; i++) {
-    temp = temp + arr[i];
-    result = result + temp;
+  while (minHeap.length > 1) {
+    const first = minHeap.shift();
+    const second = minHeap.shift();
+    const combined = first + second;
+    totalCost += combined;
+
+    // Insert back and keep it sorted (inefficient heap simulation)
+    minHeap.push(combined);
+    minHeap.sort((a, b) => a - b);
   }
 
-  return result;
+  return totalCost;
 }
 
 module.exports = mincost;
-
